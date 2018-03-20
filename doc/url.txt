@@ -1,0 +1,80 @@
+*url.txt*
+
+                            url.vim
+         Open URLs under the cursor, with arbitrary transformations.
+
+==============================================================================
+CONTENTS                                                          *url-Contents*
+
+      1. About.......................... |url-About|
+      2. Usage ......................... |url-Usage|
+        2.1  ............................. |url-:UrlOpen|
+      3. Configuration ................. |url-Configuration|
+        3.1 .............................. |url_transformers|
+        3.2 .............................. |url_opener_no_mappings|
+
+==============================================================================
+ABOUT (1)                                                            *url-About*
+
+`url.vim` is a super thin wrapper around `netrw` that allows for basic url
+transformations before opening them. It works by exposing an entry point
+(`g:url_transformers`) so that you can define a custom set of functions to run
+against the word under the cursor.
+
+This plugin was written by Gordon Fontenot[1]. Bugs and feature requests are
+welcomed, and can be posted on the GitHub repo[2].
+
+[1]: http://gordonfontenot.com
+[2]: https://github.com/gfontenot/vim-url-opener
+
+==============================================================================
+USAGE (2)                                                            *url-Usage*
+
+url.vim provides one primary command, and a couple small configuration
+options.
+
+------------------------------------------------------------------------------
+                                                                  *url-:UrlOpen*
+2.1 :UrlOpen~
+
+Open the URL under the cursor, using the configured transformations.
+
+This passes the word under the cursor through the configured transformers, and
+passes the first successful result to `netrw`. If no transformations are
+successful, the raw value under the cursor will be passed directly to `netrw`
+for handling.
+
+==============================================================================
+CONFIGURATION (3)                                            *url-Configuration*
+
+You can configure `url.vim` with the following settings:
+
+------------------------------------------------------------------------------
+                                                              *url_transformers*
+3.1 g:url_transformers~
+
+The list of transformers to use on the word under the cursor. The specified
+transformer functions should take a single String argument, and should return
+a string if it can return a url to open. The first one to return a string
+value will have that string value passed to `netrw` for opening. If none of
+the specified transformers are successful, the raw value under the cursor will
+be passed to `netrw`.
+
+  let g:url_transformers = ['my_custom_transformer']
+
+Default: '[]`
+
+------------------------------------------------------------------------------
+                                                        *url_opener_no_mappings*
+3.2 g:url_opener_no_mappings~
+
+By default, `url.vim` will clobber the default `gx` mapping for `netrw`. If
+you don't want this behavior you can set `g:url_opener_no_mappings` to `0`,
+and no mappings will be defined.
+
+  let g:url_opener_no_mappings = 0
+
+Default: none
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:
