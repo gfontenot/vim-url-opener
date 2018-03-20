@@ -50,8 +50,8 @@ value. If none of the transformers return a value, it will pass the raw value
 ### Mappings
 
 `url.vim` maps itself to `gx` by default. This is intentional, since it's
-intended to take the place of `netrw`. If you don't want this behavior you can
-disable it by setting `g:url_opener_no_mappings` to `false` (or `0`).
+intended to take the place of `netrw`. If you have an existing custom mapping
+assigned to `gx`, it will be left alone.
 
 ## License
 
